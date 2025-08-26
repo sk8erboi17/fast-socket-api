@@ -8,6 +8,16 @@ Upon a successful launch, the server will display a status banner in the console
 
 ![img.png](images/img.png)
 
+### Dependency
+To add as dependency:
+```xml
+<dependency>
+    <groupId>io.github.sk8erboi17</groupId>
+    <artifactId>fast-socket-api</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ## Key Advantages 🚀
 - **Lightweight**: The library is designed to be lightweight, requiring only a single dependency for logging: logback-classic. This keeps the project setup simple and avoids potential dependency conflicts.
 - **Highly Scalable**: Built with `AsynchronousSocketChannel` to handle thousands of concurrent connections with a small, fixed number of threads, ensuring minimal resource consumption.

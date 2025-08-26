@@ -85,13 +85,13 @@ public class ByteBuffersPool {
      * <p>
      * This method uses lazy initialization, meaning the pool instance is created only when it is first requested.
      *
-     * <h3>Why is it synchronized?</h3>
+     * <b>Why is it synchronized?</b>
      * To prevent a <b>race condition</b> in a multithreaded environment.
      * Without synchronization, if two or more threads call {@code getInstance()} at the exact same time when {@code instance}
      * is {@code null}, both threads could pass the {@code if (instance == null)} check simultaneously. This would result
      * in multiple instances of the pool being created, which violates the Singleton pattern and could lead to resource leaks or unpredictable behavior.
      *
-     * <h3>How does it work?</h3>
+     * <b>How does it work?</b>
      * The {@code synchronized} keyword ensures <b>mutual exclusion</b> by forcing threads to acquire a lock before they can
      * execute the method. For a static method, the lock is on the class object itself ({@code ByteBuffersPool.class}). The sequence of events is as follows:
      * <ol>

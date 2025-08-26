@@ -109,11 +109,12 @@ public class FrameEncoder {
      *                       This diagram shows the complete data frame for sending a string. The nested
      *                       diagram illustrates the structure of the payload itself.
      *                       <pre>
+     *
      *                       +--------------+-------------------+------------------+------------------------------------------------+
      *                       | START_MARKER |   FRAME_LENGTH      | dataTypeMarker  |                  Payload                       |
      *                       | (1 byte)     | (4 bytes=Int.BYTES)| (1 byte)         |                                                |
      *                       +--------------+-------------------+------------------+------------------------------------------------+
-     *                                                                                                |
+     *                                                                                               |
      *                                                                                               V
      *                                                                            +------------------+-------------------------------+
      *                                                                            |  STRING_LENGTH     |         STRING_BYTES          |

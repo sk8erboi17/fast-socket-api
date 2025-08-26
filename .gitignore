@@ -28,3 +28,4 @@ server_options.properties
 logs/
 .idea/
 fast-socket-api.iml
+deploy.sh

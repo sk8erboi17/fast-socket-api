@@ -21,7 +21,7 @@ public class ServerOptions {
     private static final String TIMEOUT_PROP = "keepAliveTimeoutSeconds";
     private static final String BUFFER_POOLS_PROP = "bufferPools";
     private static final String THREADS_NUMBER_PROP = "threadsNumber";
-    private static final String SERVER_NAME_PROP = "server_name"; // Rinominato per chiarezza
+    private static final String SERVER_NAME_PROP = "server_name";
     private static final String PROPERTIES_FILENAME = "server_options.properties";
 
     private boolean keepAlive;
@@ -42,7 +42,7 @@ public class ServerOptions {
             try (InputStream input = new FileInputStream(propertiesFile)) {
                 fileProps.load(input);
             } catch (IOException e) {
-                log.error("Impossibile leggere '{}'. Verranno usati i valori di default.", PROPERTIES_FILENAME, e);
+                log.error("Could not read '{}'. Default values will be used.", PROPERTIES_FILENAME, e);
             }
         }
 
@@ -57,7 +57,7 @@ public class ServerOptions {
         for (Map.Entry<String, String> entry : defaultProps.entrySet()) {
             if (fileProps.getProperty(entry.getKey()) == null) {
                 fileProps.setProperty(entry.getKey(), entry.getValue());
-                log.warn("Proprietà mancante '{}'. Verrà aggiunto il valore di default '{}' a {}.",
+                log.warn("Missing property '{}'. Adding default value '{}' to {}.",
                         entry.getKey(), entry.getValue(), PROPERTIES_FILENAME);
                 needsUpdate = true;
             }
@@ -66,9 +66,9 @@ public class ServerOptions {
         if (needsUpdate) {
             try (OutputStream output = new FileOutputStream(propertiesFile)) {
                 fileProps.store(output, "Default Server Options");
-                log.info("Il file '{}' è stato creato o aggiornato.", PROPERTIES_FILENAME);
+                log.info("File '{}' has been created or updated.", PROPERTIES_FILENAME);
             } catch (IOException e) {
-                log.error("FATALE: Impossibile creare o aggiornare il file delle proprietà '{}'.", PROPERTIES_FILENAME, e);
+                log.error("FATAL: Could not create or update the properties file '{}'.", PROPERTIES_FILENAME, e);
             }
         }
 
@@ -84,7 +84,7 @@ public class ServerOptions {
             this.threadsNumber = Integer.parseInt(properties.getProperty(THREADS_NUMBER_PROP));
             this.serverName = properties.getProperty(SERVER_NAME_PROP);
         } catch (NumberFormatException e) {
-            log.error("Formato numerico non valido in '{}'. Verranno usati valori di emergenza.", PROPERTIES_FILENAME, e);
+            log.error("Invalid number format in '{}'. Fallback values will be used.", PROPERTIES_FILENAME, e);
             setFallbackDefaults();
         }
     }
