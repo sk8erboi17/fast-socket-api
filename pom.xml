@@ -6,13 +6,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sk8erboi17</groupId>
     <artifactId>fast-socket-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     <name>fast-socket-api</name>
     <url>https://github.com/sk8erboi17/fast-socket-api</url>
     <description>
         An implementation of an asynchronous socket in Java with an easy-to-use API.
     </description>
+    <scm>
+        <connection>scm:git:git@github.com:sk8erboi17/fast-socket-api.git</connection>
+        <developerConnection>scm:git:git@github.com:sk8erboi17/fast-socket-api.git</developerConnection>
+        <url>https://github.com/sk8erboi17/fast-socket-api</url>
+    </scm>
 
     <developers>
         <developer>

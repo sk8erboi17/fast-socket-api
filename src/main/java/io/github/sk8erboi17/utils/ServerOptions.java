@@ -2,12 +2,8 @@ package io.github.sk8erboi17.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -32,6 +28,10 @@ public class ServerOptions {
 
     private ServerOptions() {
         initializeOrUpdateProperties();
+    }
+
+    public static ServerOptions getInstance() {
+        return instance;
     }
 
     private void initializeOrUpdateProperties() {
@@ -75,7 +75,6 @@ public class ServerOptions {
         loadValuesFromProperties(fileProps);
     }
 
-
     private void loadValuesFromProperties(Properties properties) {
         try {
             this.keepAlive = Boolean.parseBoolean(properties.getProperty(KEEP_ALIVE_PROP));
@@ -97,10 +96,23 @@ public class ServerOptions {
         this.serverName = "default-server";
     }
 
-    public static ServerOptions getInstance() { return instance; }
-    public boolean isKeepAlive() { return keepAlive; }
-    public int getTimeout() { return timeout; }
-    public int getBufferPools() { return bufferPools; }
-    public int getThreadsNumber() { return threadsNumber; }
-    public String getServerName() { return this.serverName; }
+    public boolean isKeepAlive() {
+        return keepAlive;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public int getBufferPools() {
+        return bufferPools;
+    }
+
+    public int getThreadsNumber() {
+        return threadsNumber;
+    }
+
+    public String getServerName() {
+        return this.serverName;
+    }
 }

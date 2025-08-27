@@ -12,7 +12,7 @@ import java.nio.channels.AsynchronousSocketChannel;
 public class Client {
 
     public static void main(String[] args) {
-        AsynchronousSocketChannel socketChannel = AsyncClientSocket.createChannel(new InetSocketAddress("localhost", 9090));
+        AsynchronousSocketChannel socketChannel = AsyncClientSocket.createChannel(new InetSocketAddress("localhost", 8082));
         new PipelineIn(socketChannel, 1024 * 4, new Echo());
         PipelineOut pipeline = new PipelineOut(socketChannel);
         pipeline.handle(new SendEcho());

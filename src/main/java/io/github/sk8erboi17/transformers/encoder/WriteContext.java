@@ -11,5 +11,4 @@ import java.nio.channels.AsynchronousSocketChannel;
  * It contains the buffer, the original callback, and references to the
  * necessary components for the completion handler to be fully stateless.
  */
-public record WriteContext(ByteBuffer buffer, SendData sendData, AsynchronousSocketChannel channel, ByteBuffersPool pool) {
-}
+public record WriteContext(ByteBuffer buffer, SendData sendData, AsynchronousSocketChannel channel,ByteBuffersPool pool) {}

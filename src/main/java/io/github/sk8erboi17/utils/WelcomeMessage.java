@@ -1,6 +1,7 @@
 package io.github.sk8erboi17.utils;
 
 import org.slf4j.Logger;
+
 import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +18,8 @@ public final class WelcomeMessage {
     private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_GREEN = "\u001B[32m";
 
-    private WelcomeMessage() {}
+    private WelcomeMessage() {
+    }
 
     /**
      * Builds and logs the server startup banner by fetching configuration

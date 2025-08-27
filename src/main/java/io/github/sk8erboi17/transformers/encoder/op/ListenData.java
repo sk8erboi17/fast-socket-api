@@ -15,7 +15,7 @@ public class ListenData {
     private static final int DOUBLE_BYTES = Double.BYTES;
     private static final int CHAR_BYTES = Character.BYTES;
 
-    public void listen(byte marker, ByteBuffer buffer, ReceiveData callback) {
+    public void listen(byte marker, ByteBuffer buffer, int actualPayloadSize, ReceiveData callback) {
         if (marker == 0x00) {
             handleHeartbeat(callback);
             return;
@@ -27,12 +27,12 @@ public class ListenData {
 
         try {
             switch (marker) {
-                case 0x01 -> handleString(buffer, callback);
+                case 0x01 -> handleString(buffer, actualPayloadSize, callback);
                 case 0x02 -> handleInt(buffer, callback);
                 case 0x03 -> handleFloat(buffer, callback);
                 case 0x04 -> handleDouble(buffer, callback);
                 case 0x05 -> handleChar(buffer, callback);
-                case 0x06 -> handleByteArray(buffer, callback);
+                case 0x06 -> handleByteArray(buffer, actualPayloadSize, callback);
                 default ->
                         callback.exception(new ProtocolViolationException("Unknown marker received: 0x" + String.format("%02X", marker) + ". Remaining buffer: " + buffer.remaining() + " bytes."));
             }
@@ -48,21 +48,8 @@ public class ListenData {
         callback.receive(null);
     }
 
-    private void handleString(ByteBuffer buffer, ReceiveData callback) {
-        if (buffer.remaining() < INT_BYTES) {
-            throw new BufferUnderflowException();
-        }
-        int length = buffer.getInt();
-
-        if (length < 0) {
-            throw new ProtocolViolationException("Protocol violation: Invalid negative string length received: " + length);
-        }
-        if (length > buffer.remaining()) {
-            throw new ProtocolViolationException("Protocol violation: Stated string length " + length + " is greater than remaining buffer size " + buffer.remaining());
-        }
-
-
-        byte[] stringBytes = new byte[length];
+    private void handleString(ByteBuffer buffer, int actualPayloadSize, ReceiveData callback) {
+        byte[] stringBytes = new byte[actualPayloadSize];
         buffer.get(stringBytes);
         String data = new String(stringBytes, StandardCharsets.UTF_8);
         callback.receive(data);
@@ -100,20 +87,8 @@ public class ListenData {
         callback.receive(data);
     }
 
-    private void handleByteArray(ByteBuffer buffer, ReceiveData callback) {
-        if (buffer.remaining() < INT_BYTES) {
-            throw new BufferUnderflowException();
-        }
-        int length = buffer.getInt();
-
-        if (length < 0) {
-            throw new ProtocolViolationException("Protocol violation: Invalid negative byte array length received: " + length);
-        }
-        if (length > buffer.remaining()) {
-            throw new ProtocolViolationException("Protocol violation: Stated byte array length " + length + " is greater than remaining buffer size " + buffer.remaining());
-        }
-
-        byte[] data = new byte[length];
+    private void handleByteArray(ByteBuffer buffer, int actualPayloadSize, ReceiveData callback) {
+        byte[] data = new byte[actualPayloadSize];
         buffer.get(data);
         callback.receive(data);
     }

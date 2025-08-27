@@ -59,10 +59,10 @@ public class DataDecoder {
         }
 
         ReadOperationContext operationContext = new ReadOperationContext(context, tempReadBuffer);
-        if (keepAlive){
-            context.getChannel().read(tempReadBuffer, timeout, TimeUnit.SECONDS,operationContext,readCompletionHandler);
-        }else{
-            context.getChannel().read(tempReadBuffer,operationContext,readCompletionHandler);
+        if (keepAlive) {
+            context.getChannel().read(tempReadBuffer, timeout, TimeUnit.SECONDS, operationContext, readCompletionHandler);
+        } else {
+            context.getChannel().read(tempReadBuffer, operationContext, readCompletionHandler);
         }
 
 

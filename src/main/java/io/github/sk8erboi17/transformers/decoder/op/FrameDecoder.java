@@ -1,8 +1,8 @@
 package io.github.sk8erboi17.transformers.decoder.op;
 
 import io.github.sk8erboi17.listeners.callbacks.ReceiveData;
-import io.github.sk8erboi17.transformers.encoder.op.ListenData;
 import io.github.sk8erboi17.transformers.Markers;
+import io.github.sk8erboi17.transformers.encoder.op.ListenData;
 
 import java.io.IOException;
 import java.nio.BufferOverflowException;
@@ -73,18 +73,18 @@ public class FrameDecoder {
                 return;
             }
 
-            /* check if frame is not completed, if bytes in the buffer are inferior to bytes received, reset to position without marker */
-            if (buffer.remaining() < frameLength) {
+            int actualPayloadSize = frameLength - Markers.START_MARKER_SIZE - Markers.DATA_TYPE_SIZE;
+
+            // Check if the full frame is available in the buffer.
+            if (buffer.remaining() < actualPayloadSize) {
                 buffer.reset();
                 return;
             }
 
             try {
                 byte dataTypeMarker = buffer.get();
-                int actualPayloadSize = frameLength - Markers.DATA_TYPE_SIZE;
-                ByteBuffer payloadBuffer = buffer.slice();
-                payloadBuffer.limit(actualPayloadSize);
-                listenDataProcessor.listen(dataTypeMarker, payloadBuffer, callback);
+                ByteBuffer dataTypeBuffer = buffer.slice();
+                listenDataProcessor.listen(dataTypeMarker, dataTypeBuffer, actualPayloadSize, callback); // buffer contain only payload
                 buffer.position(buffer.position() + actualPayloadSize);
             } catch (Exception e) {
                 logError("Error processing decoded frame", e, channel);

@@ -21,13 +21,6 @@ public class Listener {
     private static final Logger log = LoggerFactory.getLogger(Listener.class);
 
     private static Listener instance;
-    private static ExecutorService executors;
-    private AsynchronousServerSocketChannel serverSocketChannel;
-
-    private Listener() {
-        executors = Executors.newFixedThreadPool(ServerOptions.getInstance().getThreadsNumber());
-    }
-
     /**
      * A SINGLE, STATIC, and REUSABLE CompletionHandler for accepting connections.
      * It is stateless and does not depend on an instance of the Listener class.
@@ -60,7 +53,19 @@ public class Listener {
             }
         }
     };
+    private static ExecutorService executors;
+    private AsynchronousServerSocketChannel serverSocketChannel;
 
+    private Listener() {
+        executors = Executors.newFixedThreadPool(ServerOptions.getInstance().getThreadsNumber());
+    }
+
+    public static Listener getInstance() {
+        if (instance == null) {
+            instance = new Listener();
+        }
+        return instance;
+    }
 
     public void closeListener() {
         if (executors != null && !executors.isShutdown()) {
@@ -75,13 +80,6 @@ public class Listener {
                 System.err.println("Executor service shutdown interrupted: " + e.getMessage());
             }
         }
-    }
-
-    public static Listener getInstance() {
-        if (instance == null) {
-            instance = new Listener();
-        }
-        return instance;
     }
 
     public void startConnectionListen(AsynchronousServerSocketChannel serverSocketChannel, ConnectionRequest connectionRequest) {

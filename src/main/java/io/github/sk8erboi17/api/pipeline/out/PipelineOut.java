@@ -1,8 +1,8 @@
 package io.github.sk8erboi17.api.pipeline.out;
 
+import io.github.sk8erboi17.api.pipeline.out.requests.Request;
 import io.github.sk8erboi17.exception.ProtocolIncompleteException;
 import io.github.sk8erboi17.listeners.callbacks.SendData;
-import io.github.sk8erboi17.api.pipeline.out.requests.Request;
 import io.github.sk8erboi17.transformers.encoder.DataEncoder;
 import io.github.sk8erboi17.transformers.encoder.op.FrameEncoder;
 import io.github.sk8erboi17.utils.FailWriter;

@@ -54,7 +54,8 @@ public class FrameEncoder {
     public void sendString(String data, SendData callback) {
         byte marker = 0x01;
         byte[] stringBytes = data.getBytes(StandardCharsets.UTF_8);
-        int payloadSize = Integer.BYTES + stringBytes.length; // payloadSize is composed size string + length of content string
+        int payloadSize = stringBytes.length; // size of string data
+
         Consumer<ByteBuffer> payloadWriter = buffer -> {
             /*  How of string is send:
              *   L = LENGTH
@@ -64,7 +65,6 @@ public class FrameEncoder {
              *  -----------
              */
 
-            buffer.putInt(stringBytes.length);
             buffer.put(stringBytes);
         };
         buildAndSendFrame(marker, payloadSize, callback, payloadWriter);
@@ -87,9 +87,8 @@ public class FrameEncoder {
 
     public void sendByteArray(byte[] data, SendData callback) {
         byte marker = 0x06;
-        int payloadSize = Integer.BYTES + data.length;
+        int payloadSize = data.length;
         Consumer<ByteBuffer> payloadWriter = buffer -> {
-            buffer.putInt(data.length);
             buffer.put(data);
         };
         buildAndSendFrame(marker, payloadSize, callback, payloadWriter);
@@ -108,22 +107,15 @@ public class FrameEncoder {
      *                       <p>
      *                       This diagram shows the complete data frame for sending a string. The nested
      *                       diagram illustrates the structure of the payload itself.
-     *                       <pre>
-     *
-     *                       +--------------+-------------------+------------------+------------------------------------------------+
-     *                       | START_MARKER |   FRAME_LENGTH      | dataTypeMarker  |                  Payload                       |
-     *                       | (1 byte)     | (4 bytes=Int.BYTES)| (1 byte)         |                                                |
-     *                       +--------------+-------------------+------------------+------------------------------------------------+
-     *                                                                                               |
-     *                                                                                               V
-     *                                                                            +------------------+-------------------------------+
-     *                                                                            |  STRING_LENGTH     |         STRING_BYTES          |
-     *                                                                            | (4 bytes=Int.BYTES)|      (... bytes)              |
-     *                                                                            +------------------+-------------------------------+
-     *                       </pre>
+     *<pre>
+     * +--------------+-------------------+------------------+------------------------------------------------+
+     * | START_MARKER |   FRAME_LENGTH      | dataTypeMarker  |                  Payload                       |
+     * | (1 byte)     | (4 bytes=Int.BYTES)| (1 byte)         |                                                |
+     * +--------------+-------------------+------------------+------------------------------------------------+
+     * </pre>
      */
     private void buildAndSendFrame(byte dataTypeMarker, int payloadSize, SendData callback, Consumer<ByteBuffer> payloadWriter) {
-        int totalPacketSize = Markers.START_MARKER_SIZE + Integer.BYTES + Markers.DATA_TYPE_SIZE + payloadSize;
+        int totalPacketSize = Markers.START_MARKER_SIZE + Markers.DATA_TYPE_SIZE + payloadSize;
 
         ByteBuffer outputBuffer;
         try {
@@ -149,7 +141,7 @@ public class FrameEncoder {
 
         try {
             outputBuffer.put(Markers.START_MARKER);
-            outputBuffer.putInt(payloadSize + Markers.DATA_TYPE_SIZE); // frame length =  data marker + payload
+            outputBuffer.putInt(totalPacketSize);
             outputBuffer.put(dataTypeMarker);
             payloadWriter.accept(outputBuffer);
             outputBuffer.flip();

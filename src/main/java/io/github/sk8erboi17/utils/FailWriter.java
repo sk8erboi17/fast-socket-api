@@ -10,11 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -141,7 +137,8 @@ public final class FailWriter {
 
         fileChannel.write(directBuffer, position, null, new CompletionHandler<Integer, Void>() {
             @Override
-            public void completed(Integer result, Void attachment) {}
+            public void completed(Integer result, Void attachment) {
+            }
 
             @Override
             public void failed(Throwable exc, Void attachment) {

@@ -6,6 +6,7 @@ import io.github.sk8erboi17.utils.FailWriter;
 import io.github.sk8erboi17.utils.WelcomeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
@@ -18,14 +19,13 @@ import java.nio.channels.AsynchronousServerSocketChannel;
  * The method createInput opens a new server socket channel and binds it to the given address, preparing it to accept client connections.
  */
 public class AsyncServerSocket {
-    private static final Logger log = LoggerFactory.getLogger(AsyncServerSocket.class);
-    private static AsynchronousServerSocketChannel serverSocketChannel;
-
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
     public static final String ANSI_YELLOW = "\u001B[33m";
+    private static final Logger log = LoggerFactory.getLogger(AsyncServerSocket.class);
+    private static AsynchronousServerSocketChannel serverSocketChannel;
 
     public static AsynchronousServerSocketChannel createInput(InetSocketAddress inetSocketAddress) {
         if (serverSocketChannel != null) {

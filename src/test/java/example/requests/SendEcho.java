@@ -1,7 +1,7 @@
 package example.requests;
 
-import io.github.sk8erboi17.listeners.callbacks.SendData;
 import io.github.sk8erboi17.api.pipeline.out.requests.Request;
+import io.github.sk8erboi17.listeners.callbacks.SendData;
 
 public class SendEcho implements Request {
     @Override

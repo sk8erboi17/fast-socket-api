@@ -1,9 +1,9 @@
 package io.github.sk8erboi17.api.pipeline.in;
 
 import io.github.sk8erboi17.listeners.callbacks.ReceiveData;
-import io.github.sk8erboi17.transformers.encoder.op.ListenData;
 import io.github.sk8erboi17.transformers.decoder.DataDecoder;
 import io.github.sk8erboi17.transformers.decoder.op.FrameDecoder;
+import io.github.sk8erboi17.transformers.encoder.op.ListenData;
 
 import java.nio.channels.AsynchronousSocketChannel;
 
@@ -34,6 +34,7 @@ public class PipelineIn {
 
     /**
      * change handler for incoming datas
+     *
      * @param newCallback Il nuovo ReceiveData handler.
      */
     public void setReceiveDataCallback(ReceiveData newCallback) {

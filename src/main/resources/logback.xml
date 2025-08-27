@@ -1,6 +1,6 @@
 <configuration>
 
-    <property name="LOGS_DIR" value="logs" />
+    <property name="LOGS_DIR" value="logs"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -23,13 +23,13 @@
     </appender>
 
     <root level="info">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
 
     <logger name="io.github.sk8erboi17" level="debug" additivity="false">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </logger>
 
 </configuration>
