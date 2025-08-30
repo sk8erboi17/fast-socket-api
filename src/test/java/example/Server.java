@@ -35,9 +35,8 @@ public class Server {
 
             @Override
             public void onConnectionAccepted(AsynchronousSocketChannel socketChannel) {
-                counter.incrementAndGet();
                 System.out.println("(" + counter.get() + ")Accepted connection");
-                new PipelineIn(socketChannel, 8192, receiveData.get(counter.get() % 2));
+                new PipelineIn(socketChannel, Integer.MAX_VALUE, receiveData.get(counter.getAndIncrement() % 2));
                 new PipelineOut(socketChannel).handle(new SendEcho());
             }
 

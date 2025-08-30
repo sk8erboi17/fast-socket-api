@@ -20,9 +20,9 @@ public class PipelineGroupManager {
     private AsynchronousChannelGroup channelGroup;
     private ExecutorService executorService;
 
-    public PipelineGroupManager(int numThreads) {
+    public PipelineGroupManager() {
         try {
-            executorService = Executors.newFixedThreadPool(numThreads);
+            executorService = Executors.newVirtualThreadPerTaskExecutor();
             // Initialize the AsynchronousChannelGroup with the thread pool.
             channelGroup = AsynchronousChannelGroup.withThreadPool(executorService);
         } catch (IOException e) {

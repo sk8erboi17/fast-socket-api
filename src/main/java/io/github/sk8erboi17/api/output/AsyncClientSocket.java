@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * It uses PipelineGroupManager to manage the underlying channel group, which can help in efficiently handling multiple concurrent connections.
  */
 public class AsyncClientSocket {
-    private static final PipelineGroupManager pipelineGroupManager = new PipelineGroupManager(Runtime.getRuntime().availableProcessors());
+    private static final PipelineGroupManager pipelineGroupManager = new PipelineGroupManager();
 
     public static AsynchronousSocketChannel createChannel(InetSocketAddress inetSocketAddress) {
         AsynchronousSocketChannel socketChannel;
